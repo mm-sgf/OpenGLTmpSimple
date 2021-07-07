@@ -16,6 +16,8 @@
             <option value="$PROJECT_DIR$/OpenGLTexturePro1" />
             <option value="$PROJECT_DIR$/OpenGl3DPro1" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/escamera" />
+            <option value="$PROJECT_DIR$/espermission" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
