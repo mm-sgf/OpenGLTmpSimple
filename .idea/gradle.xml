@@ -5,17 +5,18 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="testRunner" value="PLATFORM" />
+        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CameraGL" />
             <option value="$PROJECT_DIR$/OpenGLPro1" />
             <option value="$PROJECT_DIR$/OpenGLPro2" />
             <option value="$PROJECT_DIR$/OpenGLTexturePro1" />
             <option value="$PROJECT_DIR$/OpenGl3DPro1" />
-            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/escamera" />
             <option value="$PROJECT_DIR$/espermission" />
           </set>

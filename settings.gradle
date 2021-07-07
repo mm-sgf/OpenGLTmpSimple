@@ -1,8 +1,8 @@
+include ':CameraGL'
 include ':espermission'
 include ':escamera'
 include ':OpenGl3DPro1'
 include ':OpenGLTexturePro1'
 include ':OpenGLPro2'
 include ':OpenGLPro1'
-include ':app'
 rootProject.name = "OpenGLSimple"

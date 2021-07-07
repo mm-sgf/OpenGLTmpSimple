@@ -42,7 +42,5 @@ ext.v_test_ext = '1.1.2'
 ext.v_test_espresso_core = '3.3.1'
 
 ext.v_multidex = '1.0.3'
-ext.v_arouter_api = '1.5.1'
-ext.v_arouter_compiler = '1.5.1'
 ext.v_design = '26.0.0-beta1'
 
