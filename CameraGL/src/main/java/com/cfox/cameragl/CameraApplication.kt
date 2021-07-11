@@ -8,7 +8,7 @@ class CameraApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        EsLog.setPrintTag("YUV-Camera")
+        EsLog.setPrintTag("GL-Camera")
         EsCamera.init(this)
     }
 }

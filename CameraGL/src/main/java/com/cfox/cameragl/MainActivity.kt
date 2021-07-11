@@ -5,12 +5,16 @@ import android.graphics.*
 import android.media.Image
 import android.os.Bundle
 import android.util.Size
+import android.view.TextureView
 import androidx.appcompat.app.AppCompatActivity
 import com.cfox.camera.EsCamera
 import com.cfox.camera.EsCameraManager
 import com.cfox.camera.capture.PhotoCapture
+import com.cfox.camera.log.EsLog
 import com.cfox.camera.request.FlashState
 import com.cfox.camera.request.PreviewRequest
+import com.cfox.cameragl.gl.GLCameraView
+import com.cfox.cameragl.gl.GLSurfaceProviderImpl
 import com.cfox.espermission.EsPermissions
 import java.util.*
 
@@ -22,7 +26,7 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
 
 
     private val previewTextureView by lazy {
-        findViewById<AutoFitTextureView>(R.id.preview_texture_view)
+        findViewById<GLCameraView>(R.id.preview_texture_view)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,13 +38,12 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
         }
 
         esCameraManager = EsCamera.createCameraManager(this, CameraConfigStrategy())
-        esCameraManager.let {
+        esCameraManager?.let {
             val capture = it.photoModule()
             if (capture is PhotoCapture) {
                 photoCapture = capture
             }
         }
-
         startPreview()
     }
 
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
     private fun startPreview() {
         val builder = getRequest()
         builder.openBackCamera()
-        builder.setSurfaceProvider(SurfaceProviderImpl(previewTextureView))
+        builder.setSurfaceProvider(GLSurfaceProviderImpl(previewTextureView.getSurfaceTexture()))
         photoCapture?.let {
             it.onStartPreview(builder.builder()) { }
         }
