@@ -40,6 +40,7 @@ object GLCameraUtils {
 
         // 创建程序
         val program = GLES20.glCreateProgram()
+        // 挂载定点和片源
         GLES20.glAttachShader(program, vShader)
         GLES20.glAttachShader(program, fShader)
 

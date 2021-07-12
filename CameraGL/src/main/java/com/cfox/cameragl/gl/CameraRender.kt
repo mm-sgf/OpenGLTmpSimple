@@ -10,6 +10,7 @@ class CameraRender(val glCameraView: GLCameraView) : GLSurfaceView.Renderer, Sur
 
     private var screenFilter:ScreenFilter ? = null
     private val mtx = FloatArray(16)
+    // 创建一个surfaceTexture , 并获取surfaceTexture 中的纹理id =》textures
     private val textures : IntArray = IntArray(1)
     private val surfaceTexture : SurfaceTexture = SurfaceTexture(textures[0])
 
@@ -29,12 +30,16 @@ class CameraRender(val glCameraView: GLCameraView) : GLSurfaceView.Renderer, Sur
 
     override fun onDrawFrame(gl: GL10?) {
 
+        // 将一帧数据更新到GL 可以操作的纹理缓冲区中
         surfaceTexture.updateTexImage()
+        // 获取图像的矩阵
         surfaceTexture.getTransformMatrix(mtx)
+        screenFilter?.setTransformMatrix(mtx)
         screenFilter?.onDraw(textures[0])
     }
 
     override fun onFrameAvailable(surfaceTexture: SurfaceTexture?) {
+        // 发起GL绘制
         glCameraView.requestRender()
     }
 }
