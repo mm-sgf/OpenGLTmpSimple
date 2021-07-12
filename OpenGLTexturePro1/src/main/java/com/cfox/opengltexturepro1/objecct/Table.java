@@ -40,11 +40,13 @@ public class Table {
 
     public void bindData(TextureShaderProgram textureShaderProgram) {
 
+        // 设置顶点坐标
         vertexArray.setVertexAttribuPointer(0,
                 textureShaderProgram.getPositionAttributeLocation(),
                 POSITION_COMPONENT_COUNT,
                 STRIDE);
 
+        // 设置纹理坐标
         vertexArray.setVertexAttribuPointer(POSITION_COMPONENT_COUNT,
                 textureShaderProgram.getTextureCoordinatesAttributeLocation(),
                 TEXTURE_COORDINATES_COMPONENT_COUNT,

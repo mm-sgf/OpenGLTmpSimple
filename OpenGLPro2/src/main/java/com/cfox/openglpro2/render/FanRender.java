@@ -29,6 +29,18 @@ public class FanRender implements GLSurfaceView.Renderer {
      * 下面定义两个三角形的顶点， 且坐标是逆时针的，称为卷曲顺序
      *
      * 使用三角形扇进行画，使用4个三角形完成一个矩形
+     *
+     * （-0.5f, 0.5f）                (0.5f, 0.5f)
+     *
+     *
+     *                    (0f,0f)
+     *
+     *
+     *  (-0.5f, -0.5f)                (0.5f, -0.5f)
+     *  三角形扇有如下特点
+     *  1. 除定点（第一个点）定点顺序逆时针
+     *  2. 点一个点是构成每个三角形的点一个公共顶点
+     *  3. 第二个点和最后一个点相同，形成一个闭环
      */
     private float[] tableVerticesWithTriangles = {
 
@@ -157,7 +169,7 @@ public class FanRender implements GLSurfaceView.Renderer {
         GLog.d("onDrawFrame -----> ");
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 //        // 画正方形
-//        GLES20.glUniform4f(uColorLocation, 0.0f, 1.0f, 1.0f, 1.0f);
+        // 绘制三角形扇 使用 GL_TRIANGLE_FAN
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 6);
 //
 //        // 画线

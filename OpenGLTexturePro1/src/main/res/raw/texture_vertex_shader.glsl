@@ -2,7 +2,7 @@
 uniform mat4 u_Matrix;// 创建一个 4 * 4 的矩阵
 
 attribute vec4 a_Position;// 添加一个位置属性， 4 个字节
-attribute vec2 a_TextureCoordinates;// 添加一个纹理坐标属性， 2 个字节  // 纹理坐标分量 ， S 和 T
+attribute vec2 a_TextureCoordinates;// 添加一个纹理坐标属性， 2 个字节（x,y）  // 纹理坐标分量 ， S 和 T
 
 varying vec2 v_TextureCoordinates;// 添加一个接收纹理坐标的变量
 

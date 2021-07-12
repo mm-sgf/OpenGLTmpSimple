@@ -9,8 +9,6 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
 import com.cfox.openglpro2.log.GLog;
-import com.cfox.openglpro2.render.FanRender;
-import com.cfox.openglpro2.render.MyRender;
 import com.cfox.openglpro2.render.OrthRender;
 
 public class MainActivity extends AppCompatActivity {

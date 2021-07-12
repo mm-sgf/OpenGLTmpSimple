@@ -135,17 +135,23 @@ public class MyRender implements GLSurfaceView.Renderer {
         GLog.d("onDrawFrame -----> ");
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         // 画正方形
+        // 设置颜色
         GLES20.glUniform4f(uColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
+        // 绘制，设置绘制定点buffer 中的几个点， 设置 GL_TRIANGLES 绘制三角
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
+
+
         GLES20.glUniform4f(uColorLocation, 1.0f, 1.0f, 1.0f, 1.0f);
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 6, 12);
 
         // 画线
         GLES20.glUniform4f(uColorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+        // GL_LINES 绘制线
         GLES20.glDrawArrays(GLES20.GL_LINES, 12, 2);
 
         // 画点
         GLES20.glUniform4f(uColorLocation, 0.0f, 0.0f, 1.0f, 1.0f);
+        // GL_POINTS 绘制点
         GLES20.glDrawArrays(GLES20.GL_POINTS, 14, 1);
 //
 //        // 画点
