@@ -15,37 +15,43 @@ import java.util.List;
  */
 public class SurfaceManager {
 
-    private final SurfaceProvider mSurfaceProvider;
+    private static final SurfaceManager sSurfaceManager = new SurfaceManager();
+
+    private PreviewSurfaceProvider mPreviewSurfaceProvider;
     private final List<Surface> mCaptureSurface;
     private final List<Surface> mPreviewSurface;
 
-    /**
-     * 这个 surfaceProvider 是提供预览的 surfaceProvider
-     * @param surfaceProvider
-     */
-    public SurfaceManager(SurfaceProvider surfaceProvider) {
-        this.mSurfaceProvider = surfaceProvider;
+    private SurfaceManager() {
         this.mCaptureSurface = new ArrayList<>();
         this.mPreviewSurface = new ArrayList<>();
     }
 
+    public static SurfaceManager getInstance() {
+        return sSurfaceManager;
+    }
+
+    public void setPreviewSurfaceProvider(PreviewSurfaceProvider previewSurfaceProvider) {
+        release();
+        EsLog.e(" set ===surface ===>");
+        this.mPreviewSurfaceProvider = previewSurfaceProvider;
+    }
+
     /**
      * 只获取预览surface list
-     * @return
      */
     public List<Surface> getPreviewSurface() {
-        mPreviewSurface.add(mSurfaceProvider.getSurface());
+        EsLog.e("get preview " + mPreviewSurfaceProvider.getSurface());
+        mPreviewSurface.add(mPreviewSurfaceProvider.getSurface());
         return mPreviewSurface;
     }
 
     public Class getPreviewSurfaceClass(){
-        return mSurfaceProvider.getPreviewSurfaceClass();
+        return mPreviewSurfaceProvider.getPreviewSurfaceClass();
     }
 
 
     /**
      * 获取所有surface list , 包括预览 surface 和 capture surface
-     * @return
      */
     public List<Surface> getTotalSurface() {
         List<Surface> surfaceList = new ArrayList<>(mCaptureSurface);
@@ -69,11 +75,18 @@ public class SurfaceManager {
     }
 
     public void setAspectRatio(Size size) {
-        mSurfaceProvider.setAspectRatio(size);
+        mPreviewSurfaceProvider.setAspectRatio(size);
     }
 
     public boolean isAvailable() {
-        return mSurfaceProvider.isAvailable();
+        return mPreviewSurfaceProvider.isAvailable();
+    }
+
+    public void release() {
+        EsLog.d("release===>");
+        mPreviewSurfaceProvider = null;
+        mCaptureSurface.clear();
+        mPreviewSurface.clear();
     }
 
 }

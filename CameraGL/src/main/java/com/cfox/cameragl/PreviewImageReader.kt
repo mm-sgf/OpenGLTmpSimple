@@ -4,8 +4,8 @@ import android.graphics.ImageFormat
 import android.media.Image
 import android.media.ImageReader
 import android.util.Size
-import com.cfox.camera.imagereader.ImageReaderProvider
 import com.cfox.camera.log.EsLog
+import com.cfox.camera.surface.ImageReaderProvider
 import java.util.concurrent.locks.ReentrantLock
 
 class PreviewImageReader(private val listenr : PreviewListener) : ImageReaderProvider(TYPE.PREVIEW) {
@@ -18,6 +18,7 @@ class PreviewImageReader(private val listenr : PreviewListener) : ImageReaderPro
 
     override fun createImageReader(previewSize: Size, captureSize: Size?): ImageReader {
         EsLog.d("createImageReader: previewSize width:" + previewSize.width + "  previewSize height:" + previewSize.height)
+        val ss = ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.YUV_420_888, 2)
         return ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.YUV_420_888, 2)
     }
 

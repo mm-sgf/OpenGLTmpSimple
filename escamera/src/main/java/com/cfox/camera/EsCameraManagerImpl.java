@@ -9,7 +9,7 @@ import com.cfox.camera.mode.CameraModeManager;
 import com.cfox.camera.mode.PhotoMode;
 import com.cfox.camera.mode.VideoMode;
 
-class EsCameraManagerImpl implements EsCameraManager {
+public class EsCameraManagerImpl implements EsCameraManager {
 
     private final CameraModeManager mCameraModule;
     private final ConfigWrapper mConfigWrapper;
@@ -28,6 +28,6 @@ class EsCameraManagerImpl implements EsCameraManager {
     @Override
     public Capture videoModule() {
         VideoMode videoMode = mCameraModule.initModule(CameraModeManager.ModuleFlag.MODULE_VIDEO);
-        return new VideoCaptureImpl(videoMode);
+        return new VideoCaptureImpl(videoMode, mConfigWrapper);
     }
 }

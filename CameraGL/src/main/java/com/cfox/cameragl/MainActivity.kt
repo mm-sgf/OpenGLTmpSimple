@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cfox.camera.EsCamera
 import com.cfox.camera.EsCameraManager
 import com.cfox.camera.capture.PhotoCapture
-import com.cfox.camera.log.EsLog
+import com.cfox.camera.capture.PreviewStateListener
 import com.cfox.camera.request.FlashState
 import com.cfox.camera.request.PreviewRequest
 import com.cfox.cameragl.gl.GLCameraView
-import com.cfox.cameragl.gl.GLSurfaceProviderImpl
+import com.cfox.cameragl.gl.GLPreviewSurfaceProviderImpl
 import com.cfox.espermission.EsPermissions
 import java.util.*
 
@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
 
     private val previewTextureView by lazy {
         findViewById<GLCameraView>(R.id.preview_texture_view)
+    }
+
+    private val basePreview by lazy {
+        findViewById<AutoFitTextureView>(R.id.base_preview)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +71,18 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
     private fun startPreview() {
         val builder = getRequest()
         builder.openBackCamera()
-        builder.setSurfaceProvider(GLSurfaceProviderImpl(previewTextureView.getSurfaceTexture()))
+        builder.setPreviewSurfaceProvider(PreviewSurfaceProviderImpl(basePreview))
+//        builder.setPreviewSurfaceProvider(GLPreviewSurfaceProviderImpl(previewTextureView.getSurfaceTexture()))
         photoCapture?.let {
-            it.onStartPreview(builder.builder()) { }
+            it.onStartPreview(builder.builder(), object : PreviewStateListener {
+                override fun onFirstFrameCallback() {
+
+                }
+
+                override fun onFocusStateChange(state: Int) {
+
+                }
+            })
         }
     }
 
@@ -79,7 +92,7 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
                 .setPreviewSize(previewSize)
                 .setPictureSize(previewSize, ImageFormat.JPEG)
                 .setFlash(FlashState.OFF)
-                .addImageReaderProvider(PreviewImageReader(this))
+                .addSurfaceProvider(GLSurfaceProvider(previewTextureView.getSurfaceTexture()))
 //                .addImageReaderProvider(new CaptureImageReader())
     }
 

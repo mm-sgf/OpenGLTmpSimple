@@ -51,7 +51,7 @@ class ScreenFilter(context: Context) {
         textureBuffer.put(TEXTURE)
 
         val vertexShader = GLFileUtils.readRawTextFile(context, R.raw.camera_vert)
-        val fragmentShader = GLFileUtils.readRawTextFile(context, R.raw.camera_frag)
+        val fragmentShader = GLFileUtils.readRawTextFile(context, R.raw.camera_frag1)
 
         EsLog.d("vertex shader : $vertexShader")
         EsLog.d("fragment shader : $fragmentShader")

@@ -15,6 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.cfox.cameragl.AutoFitTextureView
+        android:id="@+id/base_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="300dp"
+        app:layout_constraintDimensionRatio="108:144"
+        app:layout_constraintTop_toTopOf="@id/preview_texture_view"
+        app:layout_constraintStart_toStartOf="@id/preview_texture_view"
+        app:layout_constraintEnd_toEndOf="@id/preview_texture_view"
+        />
+
 
     <LinearLayout
         android:layout_width="match_parent"

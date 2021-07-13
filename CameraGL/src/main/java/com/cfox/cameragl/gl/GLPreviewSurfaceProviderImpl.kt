@@ -3,12 +3,11 @@ package com.cfox.cameragl.gl
 import android.graphics.SurfaceTexture
 import android.util.Size
 import android.view.Surface
-import android.view.TextureView
 import com.cfox.camera.log.EsLog
-import com.cfox.camera.surface.SurfaceProvider
-import com.cfox.cameragl.AutoFitTextureView
+import com.cfox.camera.surface.PreviewSurfaceProvider
 
-class GLSurfaceProviderImpl(private val surfaceTexture: SurfaceTexture) : SurfaceProvider {
+class GLPreviewSurfaceProviderImpl(private val surfaceTexture: SurfaceTexture) :
+    PreviewSurfaceProvider {
     private val surface: Surface = Surface(surfaceTexture)
     private var previewSize: Size? = null
 
