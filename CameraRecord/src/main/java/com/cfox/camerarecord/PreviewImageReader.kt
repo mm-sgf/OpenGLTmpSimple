@@ -1,0 +1,38 @@
+package com.cfox.camerarecord
+
+import android.graphics.ImageFormat
+import android.media.Image
+import android.media.ImageReader
+import android.util.Size
+import com.cfox.camera.log.EsLog
+import com.cfox.camera.surface.ImageReaderProvider
+import java.util.concurrent.locks.ReentrantLock
+
+class PreviewImageReader(private val listenr : PreviewListener) : ImageReaderProvider(TYPE.PREVIEW) {
+
+    private var y : ByteArray ? = null
+    private var u : ByteArray ? = null
+    private var v : ByteArray ? = null
+
+    private val lock = ReentrantLock()
+
+    override fun createImageReader(previewSize: Size, captureSize: Size?): ImageReader {
+        EsLog.d("createImageReader: previewSize width:" + previewSize.width + "  previewSize height:" + previewSize.height)
+        val ss = ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.YUV_420_888, 2)
+        return ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.YUV_420_888, 2)
+    }
+
+    override fun onImageAvailable(reader: ImageReader) {
+//        EsLog.d("onImageAvailable: preview frame ....")
+        val image = reader.acquireNextImage() ?: return
+
+        lock.lock()
+        listenr.onPreview(image)
+        lock.unlock()
+        image.close()
+    }
+
+    interface PreviewListener {
+        fun onPreview(image: Image)
+    }
+}

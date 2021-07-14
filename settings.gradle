@@ -6,3 +6,4 @@ include ':OpenGLTexturePro1'
 include ':OpenGLPro2'
 include ':OpenGLPro1'
 rootProject.name = "OpenGLSimple"
+include ':CameraRecord'
