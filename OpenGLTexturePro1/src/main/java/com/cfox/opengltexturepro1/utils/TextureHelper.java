@@ -54,7 +54,7 @@ public class TextureHelper {
         bitmap.recycle();
 
         // 既然完成了纹理的加载，解除与这个纹理的绑定，就不会用其他纹理方法调用意外地改变这个纹理了
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureObjectIds[0]);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
 
         GLog.d("gl texture load success ....." + textureObjectIds[0]);
         return textureObjectIds[0];

@@ -5,7 +5,6 @@ import android.graphics.*
 import android.media.Image
 import android.os.Bundle
 import android.util.Size
-import android.view.TextureView
 import androidx.appcompat.app.AppCompatActivity
 import com.cfox.camera.EsCamera
 import com.cfox.camera.EsCameraManager
@@ -14,7 +13,6 @@ import com.cfox.camera.capture.PreviewStateListener
 import com.cfox.camera.request.FlashState
 import com.cfox.camera.request.PreviewRequest
 import com.cfox.camerarecord.gl.GLCameraView
-import com.cfox.camerarecord.gl.GLPreviewSurfaceProviderImpl
 import com.cfox.espermission.EsPermissions
 import java.util.*
 
@@ -72,7 +70,6 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
         val builder = getRequest()
         builder.openBackCamera()
         builder.setPreviewSurfaceProvider(PreviewSurfaceProviderImpl(basePreview))
-//        builder.setPreviewSurfaceProvider(GLPreviewSurfaceProviderImpl(previewTextureView.getSurfaceTexture()))
         photoCapture?.let {
             it.onStartPreview(builder.builder(), object : PreviewStateListener {
                 override fun onFirstFrameCallback() {
@@ -93,7 +90,6 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
                 .setPictureSize(previewSize, ImageFormat.JPEG)
                 .setFlash(FlashState.OFF)
                 .addSurfaceProvider(GLSurfaceProvider(previewTextureView.getSurfaceTexture()))
-//                .addImageReaderProvider(new CaptureImageReader())
     }
 
     override fun onPreview(image: Image) {

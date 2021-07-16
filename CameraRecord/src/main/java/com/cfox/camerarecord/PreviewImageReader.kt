@@ -18,7 +18,6 @@ class PreviewImageReader(private val listenr : PreviewListener) : ImageReaderPro
 
     override fun createImageReader(previewSize: Size, captureSize: Size?): ImageReader {
         EsLog.d("createImageReader: previewSize width:" + previewSize.width + "  previewSize height:" + previewSize.height)
-        val ss = ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.YUV_420_888, 2)
         return ImageReader.newInstance(previewSize.width, previewSize.height, ImageFormat.YUV_420_888, 2)
     }
 

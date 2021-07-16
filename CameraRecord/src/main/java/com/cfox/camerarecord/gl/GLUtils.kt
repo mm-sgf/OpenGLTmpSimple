@@ -4,7 +4,7 @@ import android.opengl.GLES20
 import com.cfox.camera.log.EsLog
 import java.lang.RuntimeException
 
-object GLCameraUtils {
+object GLUtils {
 
     fun loadProgram(vertexShader:String, fragmentShader:String) : Int {
         // ==== 加载顶点着色器

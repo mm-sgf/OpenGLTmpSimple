@@ -3,54 +3,44 @@ package com.cfox.camerarecord.gl
 import android.content.Context
 import android.opengl.GLES20
 import com.cfox.camera.log.EsLog
-import com.cfox.camerarecord.R
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import java.nio.FloatBuffer
 
-class ScreenFilter(context: Context) {
+open class AbsFilter(context : Context, vertexShaderId: Int, fragmentShaderId:Int) {
 
-    var VERTEX = floatArrayOf(
+    private val VERTEX = floatArrayOf(
         -1.0f, -1.0f,
         1.0f, -1.0f,
         -1.0f, 1.0f,
         1.0f, 1.0f
     )
 
-    var TEXTURE = floatArrayOf(
+    private val TEXTURE = floatArrayOf(
         0.0f, 0.0f,
         1.0f, 0.0f,
         0.0f, 1.0f,
         1.0f, 1.0f
     )
 
-    private val vertexBuffer : FloatBuffer
-    private val textureBuffer: FloatBuffer
+    private val vertexBuffer = ByteBuffer.allocateDirect(4 * 4 * 2).order(ByteOrder.nativeOrder()).asFloatBuffer()
+    private val textureBuffer = ByteBuffer.allocateDirect(4 * 4 * 2).order(ByteOrder.nativeOrder()).asFloatBuffer()
 
-    private val program : Int
     private val vPosition : Int
     private val vCoord : Int
-    private val vMatrix : Int
     private val vTexture : Int
-
-    private var width : Int = 0
-    private var height : Int = 0
-    private var mtx : FloatArray = FloatArray(0)
+    val program : Int
 
     init {
-
         // 设置定点缓冲区
-        vertexBuffer = ByteBuffer.allocateDirect(4 * 4 * 2).order(ByteOrder.nativeOrder()).asFloatBuffer()
         vertexBuffer.clear()
         vertexBuffer.put(VERTEX)
 
         // 设置纹理坐标缓冲区
-        textureBuffer = ByteBuffer.allocateDirect(4 * 4 * 2).order(ByteOrder.nativeOrder()).asFloatBuffer()
         textureBuffer.clear()
         textureBuffer.put(TEXTURE)
 
-        val vertexShader = GLFileUtils.readRawTextFile(context, R.raw.camera_vert)
-        val fragmentShader = GLFileUtils.readRawTextFile(context, R.raw.camera_frag1)
+        val vertexShader = GLFileUtils.readRawTextFile(context, vertexShaderId)
+        val fragmentShader = GLFileUtils.readRawTextFile(context, fragmentShaderId)
 
         EsLog.d("vertex shader : $vertexShader")
         EsLog.d("fragment shader : $fragmentShader")
@@ -60,25 +50,20 @@ class ScreenFilter(context: Context) {
         // 获取GLSL 中参数GPU 操作id
         vPosition = GLES20.glGetAttribLocation(program, "vPosition")
         vCoord = GLES20.glGetAttribLocation(program, "vCoord")
-        vMatrix = GLES20.glGetUniformLocation(program, "vMatrix")
         vTexture = GLES20.glGetUniformLocation(program, "vTexture")
     }
 
-    fun setSize(width:Int, height:Int) {
-        this.width = width
-        this.height = height
+
+    open fun setSize(width:Int, height:Int) {
         // 设置画布大小
         GLES20.glViewport(0,0, width ,height)
     }
 
-    fun setTransformMatrix(matrix: FloatArray) {
-        mtx = matrix
-    }
 
-    fun onDraw(texture : Int) {
+    open fun onDraw(texture : Int)  : Int{
         // 使用 GL 程序
         GLES20.glUseProgram(program)
-
+        drawBefore()
         // 设置索引位置
         vertexBuffer.position(0)
         // index   指定要修改的通用顶点属性的索引。
@@ -98,11 +83,13 @@ class ScreenFilter(context: Context) {
 
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture)
         GLES20.glUniform1i(vTexture, 0)
-        GLES20.glUniformMatrix4fv(vMatrix, 1, false, mtx, 0)
 
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4)
+        return texture
+    }
 
-
+    open fun drawBefore(){
 
     }
+
 }
