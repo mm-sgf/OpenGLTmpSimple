@@ -5,6 +5,7 @@ import android.graphics.*
 import android.media.Image
 import android.os.Bundle
 import android.util.Size
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.cfox.camera.EsCamera
 import com.cfox.camera.EsCameraManager
@@ -23,8 +24,8 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
     private var photoCapture : PhotoCapture ? = null
 
 
-    private val previewTextureView by lazy {
-        findViewById<GLCameraView>(R.id.preview_texture_view)
+    private val glTextureView by lazy {
+        findViewById<GLCameraView>(R.id.gl_texture_view)
     }
 
     private val basePreview by lazy {
@@ -70,17 +71,15 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
         val builder = getRequest()
         builder.openBackCamera()
         builder.setPreviewSurfaceProvider(PreviewSurfaceProviderImpl(basePreview))
-        photoCapture?.let {
-            it.onStartPreview(builder.builder(), object : PreviewStateListener {
-                override fun onFirstFrameCallback() {
+        photoCapture?.onStartPreview(builder.builder(), object : PreviewStateListener {
+            override fun onFirstFrameCallback() {
 
-                }
+            }
 
-                override fun onFocusStateChange(state: Int) {
+            override fun onFocusStateChange(state: Int) {
 
-                }
-            })
-        }
+            }
+        })
     }
 
     private fun getRequest() : PreviewRequest.Builder{
@@ -89,11 +88,18 @@ class MainActivity : AppCompatActivity(), PreviewImageReader.PreviewListener {
                 .setPreviewSize(previewSize)
                 .setPictureSize(previewSize, ImageFormat.JPEG)
                 .setFlash(FlashState.OFF)
-                .addSurfaceProvider(GLSurfaceProvider(previewTextureView.getSurfaceTexture()))
+                .addSurfaceProvider(GLSurfaceProvider(glTextureView.getSurfaceTexture()))
     }
 
     override fun onPreview(image: Image) {
 
+    }
+
+    fun startRecorder(view: View) {
+        glTextureView.startRecorder()
+    }
+    fun stopRecorder(view: View) {
+        glTextureView.stopRecorder()
     }
 
 }

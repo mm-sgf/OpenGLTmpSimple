@@ -32,4 +32,12 @@ class GLCameraView : GLSurfaceView {
     fun getSurfaceTexture(): SurfaceTexture {
         return render.getSurfaceTexture()
     }
+
+    fun startRecorder(){
+        render.startRecorder()
+    }
+
+    fun stopRecorder() {
+        render.stopRecorder()
+    }
 }

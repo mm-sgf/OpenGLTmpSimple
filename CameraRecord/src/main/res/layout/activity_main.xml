@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <com.cfox.camerarecord.gl.GLCameraView
-        android:id="@+id/preview_texture_view"
+        android:id="@+id/gl_texture_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="108:144"
@@ -21,9 +21,9 @@
         android:layout_height="0dp"
         android:layout_marginEnd="300dp"
         app:layout_constraintDimensionRatio="108:144"
-        app:layout_constraintTop_toTopOf="@id/preview_texture_view"
-        app:layout_constraintStart_toStartOf="@id/preview_texture_view"
-        app:layout_constraintEnd_toEndOf="@id/preview_texture_view"
+        app:layout_constraintTop_toTopOf="@id/gl_texture_view"
+        app:layout_constraintStart_toStartOf="@id/gl_texture_view"
+        app:layout_constraintEnd_toEndOf="@id/gl_texture_view"
         />
 
 
@@ -31,18 +31,20 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/preview_texture_view"
+        app:layout_constraintTop_toBottomOf="@+id/gl_texture_view"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="startRecorder"
             android:text="开始录制"
             />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="stopRecorder"
             android:text="停止录制"
             />
 
